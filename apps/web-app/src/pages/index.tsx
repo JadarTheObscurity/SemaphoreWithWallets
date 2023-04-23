@@ -64,11 +64,12 @@ export default function IdentitiesPage() {
                     console.error(err);
                 }
             });
-            const exampleMessage = 'Create Identity';
             try {
                 const from = accounts[0];
                 // For historical reasons, you must submit the message to sign in hex-encoded UTF-8.
                 // This uses a Node.js-style buffer shim in the browser.
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                const exampleMessage = `Create Identity with chainId ${chainId}`;
                 const msg = `0x${Buffer.from(exampleMessage, 'utf8').toString('hex')}`;
                 const sign = await ethereum.request({
                 method: 'personal_sign',
